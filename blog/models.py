@@ -5,6 +5,7 @@ from django.db import models
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
+    tags = models.ManyToManyField('Tag')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -22,3 +23,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return '{} of {}'.format(self.pk, self.post.pk)
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
