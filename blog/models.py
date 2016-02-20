@@ -10,3 +10,6 @@ class Post(models.Model):
 
     is_model_field = False
 
+    def __str__(self):
+        return '{}'.format(self.pk)
+
