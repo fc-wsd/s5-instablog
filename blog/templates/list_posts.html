@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>글 목록</title>
-        <meta charset="UTF-8" />
-    </head>
+{% extends 'blog_layout.html' %}
 
-    <body>
+<!-- blog/templates/list_posts.html -->
+{% block page_title %}글 목록{% endblock %}
+
+{% block content %}
         {% for post in posts %}
         <div class="post_container">
             <h3><a href="{% url 'view_post' pk=post.pk %}">{{ post.title }}</a></h3>
@@ -16,7 +14,7 @@
 
             <div>
                 <p>글 갈래 : {{ post.category.name }}</p>
-                <p>작성일시 : {{ post.created_at }}</p>
+                <p>작성일시 : {{ post.created_at|date:"Y-m-d" }}</p>
             </div>
         </div>
         {% empty %}
@@ -35,5 +33,4 @@
                 쪽</a></span>
         {% endif %}
 
-    </body>
-</html>
+{% endblock %}
