@@ -7,6 +7,7 @@ from django.core.paginator import PageNotAnInteger
 from django.core.paginator import EmptyPage
 
 from .models import Post
+from .models import Category
 
 
 def hello(request):
@@ -47,6 +48,12 @@ def view_post(request, pk):
         'post': the_post,
     })
 
+
+def create_post(request):
+    categories = Category.objects.all()
+    return render(request, 'create_post.html', {
+        'categories': categories,
+    })
 
 
 
