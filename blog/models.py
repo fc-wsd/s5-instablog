@@ -16,8 +16,8 @@ class Post(models.Model):
 
     is_model_field = False
 
-    class Meta:
-        ordering = ('-updated_at', '-pk', )
+#    class Meta:
+#        ordering = ('-updated_at', '-pk', )
 
     def __str__(self):
         return '{} - {}'.format(self.pk, self.title)

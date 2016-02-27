@@ -15,11 +15,22 @@ def hello_with_template(request):
 
 
 def list_posts(request):
-    all_posts = Post.objects.all()
+    all_posts = Post.objects \
+            .select_related() \
+            .prefetch_related() \
+            .all().order_by('-pk')
+
     return render(request, 'list_posts.html', {
         'posts': all_posts,
     })
 
+
+def view_post(request, pk):
+    the_post = Post.objects.get(pk=pk)
+
+    return render(request, 'view_post.html', {
+        'post': the_post,
+    })
 
 
 

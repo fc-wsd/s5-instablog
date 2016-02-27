@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>글 목록</title>
+        <title>글 보기</title>
         <meta charset="UTF-8" />
     </head>
 
     <body>
-        {% for post in posts %}
         <div class="post_container">
             <h3><a href="/posts/{{ post.pk }}/">{{ post.title }}</a></h3>
 
@@ -19,9 +18,6 @@
                 <p>작성일시 : {{ post.created_at }}</p>
             </div>
         </div>
-        {% empty %}
-        <p>글이 전혀 없습니다.</p>
-        {% endfor %}
 
     </body>
 </html>
