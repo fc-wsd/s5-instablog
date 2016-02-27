@@ -1,5 +1,6 @@
 # blog/views.py
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 
 from .models import Post
@@ -26,7 +27,7 @@ def list_posts(request):
 
 
 def view_post(request, pk):
-    the_post = Post.objects.get(pk=pk)
+    the_post = get_object_or_404(Post, pk=pk)
 
     return render(request, 'view_post.html', {
         'post': the_post,
