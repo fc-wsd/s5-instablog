@@ -1,0 +1,10 @@
+        <div class="comment_container">
+            {% for comment in comments %}
+            <div class="comment_info">{{ comment.pk }} {{ comment.user }} {{ comment.created_at }}</div>
+            <div class="comment_content">{{ comment.content }}</div>
+
+            {% empty %}
+            <p>댓글 없음.</p>
+            {% endfor %}
+        </div>
+

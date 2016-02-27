@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>글 보기</title>
-        <meta charset="UTF-8" />
-    </head>
+{% extends 'blog_layout.html' %}
+{% load bootstrap3 %}
 
-    <body>
-        <div class="post_container">
+{% block page_title %}{{ post.title }} 글 보기{% endblock %}
+
+{% block content %}
+<div class="post_container">
             <h3><a href="/posts/{{ post.pk }}/">{{ post.title }}</a></h3>
 
             <div class="post_content">
@@ -19,5 +17,8 @@
             </div>
         </div>
 
-    </body>
-</html>
+{% with comments=post.comment_set.all %}
+    {% include 'comment_list.html' %}
+{% endwith %}
+
+{% endblock %}
