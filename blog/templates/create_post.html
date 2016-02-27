@@ -1,33 +1,32 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>글 작성</title>
-        <meta charset="UTF-8" />
-    </head>
+{% extends 'blog_layout.html' %}
+{% load bootstrap3 %}
 
-    <body>
+{% block page_title %}글 편집{% endblock %}
 
-        <form method="POST" action="">
+{% block content %}
+<!-- blog/templates/create_post.html -->
+        <form method="POST" action="" class="form-horizontal">
             {% csrf_token %}
-            <p>
-                <select name="category">
-                {% for category in categories %}
-                <option value="{{ category.pk }}">{{ category.name }}</option>
-                {% endfor %}
-                </select>
-            </p>
-            <p>
-            <label for="id_title">글 제목</label>
-            <input type="text" name="title" id="id_title" />
-            </p>
-            <p>
-            <textarea name="content"></textarea>
-            </p>
+            <div class="form-group form-group-sm">
+                <p>
+                    <select name="category">
+                    {% for category in categories %}
+                    <option value="{{ category.pk }}">{{ category.name }}</option>
+                    {% endfor %}
+                    </select>
+                </p>
+                <p>
+                <label for="id_title">글 제목</label>
+                <input type="text" name="title" id="id_title" />
+                </p>
+                <p>
+                <textarea name="content"></textarea>
+                </p>
 
-            <p>
-            <button type="submit">저장</button>
-            </p>
+                <p>
+                {% bootstrap_button "저장" button_type="submit" button_class="btn-primary" %}
+                </p>
+            </div>
         </form>
 
-    </body>
-</html>
+{% endblock %}
