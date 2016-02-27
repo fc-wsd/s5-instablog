@@ -8,13 +8,16 @@ class Category(models.Model):
 
 class Post(models.Model):
     category = models.ForeignKey(Category)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, db_index=True)
     content = models.TextField()
     tags = models.ManyToManyField('Tag')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     is_model_field = False
+
+    class Meta:
+        ordering = ('-updated_at', '-pk', )
 
     def __str__(self):
         return '{} - {}'.format(self.pk, self.title)
