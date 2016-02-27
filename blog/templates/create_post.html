@@ -8,6 +8,7 @@
     <body>
 
         <form method="POST" action="">
+            {% csrf_token %}
             <p>
                 <select name="category">
                 {% for category in categories %}
