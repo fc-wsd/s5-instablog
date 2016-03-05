@@ -10,7 +10,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category)
     title = models.CharField(max_length=200, db_index=True)
     content = models.TextField()
-    tags = models.ManyToManyField('Tag')
+    tags = models.ManyToManyField('Tag', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
