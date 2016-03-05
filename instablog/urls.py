@@ -25,6 +25,7 @@ urlpatterns = [
     url(
         r'^{}$'.format(settings.LOGOUT_URL[1:]),  # r'^logout/$'
         django_logout,
+        {'next_page': settings.LOGIN_URL},
         name='logout_url',
     ),
 ]
