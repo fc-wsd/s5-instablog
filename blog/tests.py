@@ -1,34 +1,64 @@
 from django.test import TestCase
+from django.test import Client
+from django.db import transaction
+from django.db.utils import IntegrityError
+from django.contrib.auth import get_user_model
+from django.core.urlresolvers import reverse
+
+from .models import Post
+from .models import Category
 
 
-class PhotoModelTest(TestCase):
-    def test_import_post_model(self):
-        Post = None
-        try:
-            from blog.models import Post
-        except ImportError:
-            pass
+User = get_user_model()
 
-        self.assertIsNotNone(Post)
 
-    def test_save_post_by_model(self):
-        '''Post 모델을 이용해 데이터를 저장하는 테스트.
-        검증 방법 : 저장한 뒤 모델 매니저로 저장한 데이터를 가져와서 비교
-        '''
-        pass
+class PostModelTest(TestCase):
+    def setUp(self):
+        self.user = User()
+        self.user.set_password('12345678')
+        self.user.save()
+        self.category = Category(name='Category')
+        self.category.save()
 
-    def test_failed_save_post_by_model(self):
-        '''Post 모델을 이용해 데이터를 저장할 때 실패하는 경우에 대한 테스트
-        '''
-        pass
+    def test_create_post_by_model(self):
+        new_post = Post()
+        new_post.title = 'hello world'
+        new_post.content = 'lorem ipsum'
 
-    def test_get_post_by_url(self):
-        '''Django Test Client를 이용해 특정 게시물을 보는 url로 접근하는 테스트
-        '''
-        pass
+        with transaction.atomic():
+            with self.assertRaises(IntegrityError):
+                new_post.save()
+        self.assertIsNone(new_post.pk)
 
-    def test_failed_get_post_by_url(self):
-        '''Django Test Client를 이용해 특정 게시물을 보지 못하고
-        실패하는 경우에 대한 테스트
-        '''
+    def test_create_post_by_model_successful(self):
+        new_post = Post()
+        new_post.category = self.category
+        new_post.user = self.user
+        new_post.save()
+
+        self.assertTrue(isinstance(new_post.pk, int))
+
+    def test_get_create_post_view_without_login(self):
+        c = Client()
+
+        url = '/posts/100000/'
+        res = c.get(url)
+        self.assertEqual(res.status_code, 404)
+
+        new_post = Post()
+        new_post.title = 'aaa'
+        new_post.content = 'bbbb'
+        new_post.category = self.category
+        new_post.user = self.user
+        new_post.save()
+
+        url = reverse('view_post', kwargs={'pk': new_post.pk})
+
+        res = c.get(url)
+        self.assertEqual(res.status_code, 200)
+
+        url = reverse('create_post')
+        data = {'title': 'world', 'content': 'hello'}
+        res = c.post(url, data, follow=False)
+        self.assertIn(res.status_code, (301, 302, )) 
 

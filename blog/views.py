@@ -61,7 +61,9 @@ def create_post(request):
     elif request.method == 'POST':
         form = PostEditForm(request.POST)
         if form.is_valid():
-            new_post = form.save()
+            new_post = form.save(commit=False)
+            new_post.user = request.user
+            new_post.save()
             return redirect('view_post', pk=new_post.pk)
 
     return render(request, 'create_post.html', {

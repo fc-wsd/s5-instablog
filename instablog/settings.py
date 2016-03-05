@@ -60,6 +60,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates1'),
+            os.path.join(BASE_DIR, 'templates2'),
+            os.path.join(BASE_DIR, 'templates3'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -127,3 +129,4 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
+LOGIN_REDIRECT_URL = '/posts/create/'
