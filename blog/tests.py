@@ -56,9 +56,11 @@ class PostModelTest(TestCase):
 
         res = c.get(url)
         self.assertEqual(res.status_code, 200)
+        # 응답에 사용된 뷰 함수의 이름이 'view_post' 인지 확인
+        self.assertEqual(res.resolver_match.func.__name__, 'view_post')
 
         url = reverse('create_post')
         data = {'title': 'world', 'content': 'hello'}
         res = c.post(url, data, follow=False)
-        self.assertIn(res.status_code, (301, 302, )) 
+        self.assertIn(res.status_code, (301, 302, ))
 
