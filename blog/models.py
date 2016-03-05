@@ -1,5 +1,6 @@
 # blog/models.py
 from django.db import models
+from django.conf import settings
 
 
 class Category(models.Model):
@@ -7,6 +8,7 @@ class Category(models.Model):
 
 
 class Post(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     category = models.ForeignKey(Category)
     title = models.CharField(max_length=200, db_index=True)
     content = models.TextField()

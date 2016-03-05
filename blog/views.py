@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.core.paginator import PageNotAnInteger
 from django.core.paginator import EmptyPage
+from django.contrib.auth.decorators import login_required
 
 from .models import Post
 from .models import Category
@@ -51,6 +52,7 @@ def view_post(request, pk):
     })
 
 
+@login_required
 def create_post(request):
     categories = Category.objects.all()
 
